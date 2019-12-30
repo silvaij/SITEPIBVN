@@ -1,0 +1,45 @@
+<?php
+	// Chame o arquivo com as Classes do PHPMailer
+	require_once('src/phpmailer.php');
+	
+	// Instância a classe PHPMailer
+	$mail = new PHPMailer();
+	
+	// Configuração dos dados do servidor e tipo de conexão (Estes dados você obtem com seu host)
+	$mail->IsSMTP(); // Define que a mensagem será SMTP
+	$mail->Host = "smtp.seudominio.com.br"; // Endereço do servidor SMTP
+	$mail->SMTPAuth = true; // Autenticação (True: Se o email será autenticado | False: se o Email não será autenticado)
+	$mail->Username = 'email@seudominio.com.br'; // Usuário do servidor SMTP
+	$mail->Password = 'sua senha'; // A Senha do email indicado acima
+	
+	// Remetente (Identificação que será mostrada para quem receber o email)
+	$mail->From = "e-mail@seudominio.com.br";
+	$mail->FromName = "Nome do Remetente ";
+	
+	// Destinatário
+	$mail->AddAddress('destinatario@dominio.com.br', 'Nome do Destinatário');
+
+	// Opcional (Se quiser enviar cópia do email)
+	$mail->AddCC('copia@dominio.com.br', 'Copia'); 
+	$mail->AddBCC('CopiaOculta@dominio.com.br', 'Copia Oculta');
+
+	// Define tipo de Mensagem que vai ser enviado
+	$mail->IsHTML(true); // Define que o e-mail será enviado como HTML
+
+	// Assunto e Mensagem do email
+	$mail->Subject  = "Mensagem Teste"; // Assunto da mensagem
+	$mail->Body = 'Aqui vem a mensagem a ser enviada, em HTML ou não.';
+	
+	// Envia a Mensagem
+	$enviado = $mail->Send();
+	
+	// Verifica se o email foi enviado
+	if($enviado)
+	{
+		echo "E-mail enviado com sucesso!";
+	}
+	else
+	{
+		echo "Não foi possível enviar o e-mail, devido ao erro de: ".$mail->ErrorInfo;
+	}
+?>
